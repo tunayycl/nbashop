@@ -117,8 +117,10 @@ namespace NbaShopService.Controllers
         #endregion
 
         #region Customer
+
+
         [HttpPost("Customer")]
-        public ActionResult<Customer> AddJersey([FromBody] Customer newCustomer)
+        public ActionResult<Customer> AddCustomer([FromBody] Customer newCustomer)
         {
             context.Customer.Add(newCustomer);
             return Ok();
@@ -149,46 +151,46 @@ namespace NbaShopService.Controllers
 
         #region Cart
 
-        [HttpGet("Cart/Price")]
-        public ActionResult<Cart> GetCartPrice()
+        [HttpGet("Cart/{cartid}/Price")]
+        public ActionResult<Cart> GetCartPrice(int cartid)
         {
-            var t = context.Cart.Select(a => a.Price);
+            var t = context.Cart.Where(a=> a.CartId == cartid).Select(a => a.Price);
             if (t == null)
                 return NotFound();
             return Ok(t);
         }
 
-        [HttpGet("Cart/NumberOfProducts")]
-        public ActionResult<Cart> GetCartNumberOfProducts()
+        [HttpGet("Cart/{cartid}/NumberOfProducts")]
+        public ActionResult<Cart> GetCartNumberOfProducts(int cartid)
         {
-            var t = context.Cart.Select(a => a.NumberOfProducts);
+            var t = context.Cart.Where(a => a.CartId == cartid).Select(a => a.NumberOfProducts);
             if (t == null)
                 return NotFound();
             return Ok(t);
         }
 
-        [HttpGet("Cart/Products")]
-        public ActionResult<Cart> GetCartProducts()
+        [HttpGet("Cart/{cartid}/Products")]
+        public ActionResult<Cart> GetCartProducts(int cartid)
         {
-            var t = context.Cart.Select(a => a.Products);
+            var t = context.Cart.Where(a => a.CartId == cartid).Select(a => a.Products);
             if (t == null)
                 return NotFound();
             return Ok(t);
         }
 
-        [HttpGet("Cart/Date")]
-        public ActionResult<Cart> GetCartDate()
+        [HttpGet("Cart/{cartid}/Date")]
+        public ActionResult<Cart> GetCartDate(int cartid)
         {
-            var t = context.Cart.Select(a => a.Date);
+            var t = context.Cart.Where(a => a.CartId == cartid).Select(a => a.Date);
             if (t == null)
                 return NotFound();
             return Ok(t);
         }
 
-        [HttpDelete("Cart/Products/{product}")]
-        public ActionResult DeleteCartProduct(string product)
+        [HttpDelete("Cart/{cartid}/Products/{product}")]
+        public ActionResult DeleteCartProduct(int cartid, string product)
         {
-            var p = context.Cart.Where(t => t.Products == product).FirstOrDefault();
+            var p = context.Cart.Where(a => a.CartId == cartid).Where(t => t.Products == product).FirstOrDefault();
             if (p == null)
             {
                 return NotFound();
@@ -212,8 +214,6 @@ namespace NbaShopService.Controllers
             else
             {
                 p.CartId = cartid;  
-                p.Price = cart.Price;
-                p.NumberOfProducts = cart.NumberOfProducts;
                 p.Products = cart.Products;
                 return Ok();
             }
