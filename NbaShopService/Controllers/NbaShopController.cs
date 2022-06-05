@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NbaShopService.Models;
-using NbaShopService.Controllers;
 
 namespace NbaShopService.Controllers
 {
@@ -9,27 +8,8 @@ namespace NbaShopService.Controllers
     [ApiController]
     public class NbaShopController : ControllerBase
     {
+        #region Team
         nbashopContext context = new nbashopContext();
-
-        #region GetTeam 
-
-        [HttpGet("Team")]
-        public ActionResult<Team> GetAllTeams()
-        {
-            var t = context.Team;
-            if (t == null)
-                return NotFound();
-            return Ok(t);
-        }
-
-        [HttpGet("Team/{teamid}")]
-        public ActionResult<Team> GetTeam(int teamid)
-        {
-            var t = context.Team.Where(a => a.TeamId == teamid).FirstOrDefault();
-            if (t == null)
-                return NotFound();
-            return Ok(t);
-        }
 
         [HttpGet("Team/Coast/{coast}")]
         public ActionResult<Team> GetCoast(string coast)
@@ -40,7 +20,7 @@ namespace NbaShopService.Controllers
             return Ok(t);
         }
 
-        [HttpGet("Team/}/Name/{name}")]
+        [HttpGet("Team/Name/{name}")]
         public ActionResult<Team> GetTeamName(string name)
         {
             var t = context.Team.Where(a => a.Name == name);
@@ -76,10 +56,170 @@ namespace NbaShopService.Controllers
             return Ok(t);
         }
 
-
-
         #endregion
 
+        #region Jersey
+        [HttpPost("Jersey")]
+        public ActionResult<Jersey> AddJersey([FromBody] Jersey newJersey)
+        {
+            context.Jersey.Add(newJersey);
+            return Ok();
+        }
 
+        [HttpPatch("Jersey/JerseyId")]
+        public ActionResult PatchJersey([FromBody] Jersey jersey, int jerseyid)
+        {
+            var p = context.Jersey.FirstOrDefault(a => a.JerseyId == jerseyid);
+
+            if (p == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                p.JerseyId = jersey.JerseyId;
+                p.Gender = jersey.Gender;
+                p.Size = jersey.Size;
+                p.Description = jersey.Description;
+                p.Name = jersey.Name;
+                p.Number = jersey.Number;
+                return Ok();
+            }
+        }
+        #endregion
+
+        #region Shorts
+        [HttpPost("Shorts")]
+        public ActionResult<Shorts> AddShorts([FromBody] Jersey newShorts)
+        {
+            context.Jersey.Add(newShorts);
+            return Ok();
+        }
+
+        [HttpPatch("Shorts/ShortsId")]
+        public ActionResult PatchShorts([FromBody] Shorts shorts, int shortsid)
+        {
+            var p = context.Shorts.FirstOrDefault(a => a.ShortsId == shortsid);
+
+            if (p == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                p.ShortsId = shorts.ShortsId;
+                p.Gender = shorts.Gender;
+                p.Size = shorts.Size;
+                p.Description = shorts.Description;
+                return Ok();
+            }
+        }
+        #endregion
+
+        #region Customer
+        [HttpPost("Customer")]
+        public ActionResult<Customer> AddJersey([FromBody] Customer newCustomer)
+        {
+            context.Customer.Add(newCustomer);
+            return Ok();
+        }
+
+        [HttpPatch("Customer/CustomerId")]
+        public ActionResult PatchCustomer([FromBody] Customer customer, int customerid)
+        {
+            var p = context.Customer.FirstOrDefault(a => a.CustomerId == customerid);
+
+            if (p == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                p.CustomerId = customer.CustomerId;
+                p.Firstname = customer.Firstname;
+                p.LastName = customer.LastName;
+                p.DateOfBirth = customer.DateOfBirth;
+                p.Email = customer.Email;
+                p.Location = customer.Location;
+                p.Postcode = customer.Postcode;
+                return Ok();
+            }
+        }
+        #endregion
+
+        #region Cart
+
+        [HttpGet("Cart/Price")]
+        public ActionResult<Cart> GetCartPrice()
+        {
+            var t = context.Cart.Select(a => a.Price);
+            if (t == null)
+                return NotFound();
+            return Ok(t);
+        }
+
+        [HttpGet("Cart/NumberOfProducts")]
+        public ActionResult<Cart> GetCartNumberOfProducts()
+        {
+            var t = context.Cart.Select(a => a.NumberOfProducts);
+            if (t == null)
+                return NotFound();
+            return Ok(t);
+        }
+
+        [HttpGet("Cart/Products")]
+        public ActionResult<Cart> GetCartProducts()
+        {
+            var t = context.Cart.Select(a => a.Products);
+            if (t == null)
+                return NotFound();
+            return Ok(t);
+        }
+
+        [HttpGet("Cart/Date")]
+        public ActionResult<Cart> GetCartDate()
+        {
+            var t = context.Cart.Select(a => a.Date);
+            if (t == null)
+                return NotFound();
+            return Ok(t);
+        }
+
+        [HttpDelete("Cart/Products/{product}")]
+        public ActionResult DeleteCartProduct(string product)
+        {
+            var p = context.Cart.Where(t => t.Products == product).FirstOrDefault();
+            if (p == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                context.Cart.Remove(p);
+                return Ok();
+            }
+        }
+
+        [HttpPatch("Cart/Cartid")]
+        public ActionResult PatchCart([FromBody] Cart cart, int cartid)
+        {
+            var p = context.Cart.FirstOrDefault(a => a.CartId == cartid);
+
+            if (p == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                p.CartId = cartid;  
+                p.Price = cart.Price;
+                p.NumberOfProducts = cart.NumberOfProducts;
+                p.Products = cart.Products;
+                return Ok();
+            }
+        }
+
+        
+        #endregion
     }
 }
