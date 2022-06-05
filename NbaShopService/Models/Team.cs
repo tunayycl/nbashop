@@ -10,8 +10,9 @@ namespace NbaShopService.Models
         public int TeamId { get; set; }
         public string Name { get; set; }
         public int Year { get; set; }
-        public string HomeAway { get; set; }
+        public string Home { get; set; }
         public string Coast { get; set; }
         public string Image { get; set; }
+        public string Away { get; set; }
     }
 }

@@ -30,6 +30,7 @@ namespace NbaShopService.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseNpgsql("Server=127.0.0.1;Port=5432;Database=nbashop;User Id=postgres;Password=postgres;");
             }
         }
@@ -141,11 +142,11 @@ namespace NbaShopService.Models
                     .ValueGeneratedNever()
                     .HasColumnName("TeamID");
 
+                entity.Property(e => e.Away).HasColumnType("character varying");
+
                 entity.Property(e => e.Coast).HasColumnType("character varying");
 
-                entity.Property(e => e.HomeAway)
-                    .HasColumnType("character varying")
-                    .HasColumnName("Home/Away");
+                entity.Property(e => e.Home).HasColumnType("character varying");
 
                 entity.Property(e => e.Image)
                     .IsRequired()
