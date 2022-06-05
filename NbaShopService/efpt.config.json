@@ -1,0 +1,63 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "nbashopContext",
+   "ContextNamespace": "Models",
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "NbaShopService",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "public.Team",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Shorts",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Cart",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Jersey",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Customer",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.viewjerseytype",
+         "ObjectType": 3
+      },
+      {
+         "Name": "public.viewcustomerproducts",
+         "ObjectType": 3
+      }
+   ],
+   "UiHint": "nbashop",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
